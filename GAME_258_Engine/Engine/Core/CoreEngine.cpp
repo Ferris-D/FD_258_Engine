@@ -86,13 +86,13 @@ void CoreEngine::Update(const float deltaTime_)
 	if (gameInterface)
 	{
 		gameInterface->Update(deltaTime_);
-		std::cout << deltaTime_ << std::endl;
+		//std::cout << deltaTime_ << std::endl;
 	}
 }
 
 void CoreEngine::Render()
 {
-	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	if (gameInterface)
 	{

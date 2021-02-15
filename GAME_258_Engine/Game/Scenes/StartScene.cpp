@@ -11,13 +11,13 @@ StartScene::~StartScene()
 bool StartScene::OnCreate()
 {
 	std::cout << "Start Scene" << std::endl;
+	// Switch to game scene
+	CoreEngine::GetInstance()->SetCurrentScene(1);
 	return true;
 }
 
 void StartScene::Update(const float deltaTime_)
 {
-	// Switch to game scene after updating once
-	CoreEngine::GetInstance()->SetCurrentScene(1);
 }
 
 void StartScene::Render()

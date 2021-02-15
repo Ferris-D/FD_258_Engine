@@ -1,6 +1,8 @@
 #ifndef COREENGINE_H
 #define COREENGINE_H
 
+#include "../Rendering/3D/GameObject.h"
+
 #include "Window.h"
 #include "Timer.h"
 #include "Debug.h"
