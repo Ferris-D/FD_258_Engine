@@ -2,6 +2,7 @@
 #define COREENGINE_H
 
 #include "../Rendering/3D/GameObject.h"
+#include "../Graphics/ShaderHandler.h"
 
 #include "Window.h"
 #include "Timer.h"

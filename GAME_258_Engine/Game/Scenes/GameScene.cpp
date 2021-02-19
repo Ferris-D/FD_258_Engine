@@ -1,6 +1,6 @@
 #include "GameScene.h"
 
-GameScene::GameScene() :shape(nullptr), shape2(nullptr)
+GameScene::GameScene() :shape(nullptr)
 {
 }
 
@@ -9,8 +9,6 @@ GameScene::~GameScene()
 	delete shape;
 	shape = nullptr;
 
-	delete shape2;
-	shape2 = nullptr;
 }
 
 bool GameScene::OnCreate()
@@ -22,31 +20,40 @@ bool GameScene::OnCreate()
 	std::vector<Vertex> vertexList;
 	vertexList.reserve(3);
 	v.position = glm::vec3(-0.5f, 0.5f, 0.0f);
+	v.colour = glm::vec3(0.0f, 1.0f, 0.0f);
 	vertexList.push_back(v);
+
 	v.position = glm::vec3(0.5f, 0.5f, 0.0f);
+	v.colour = glm::vec3(0.0f, 1.0f, 0.0f);
 	vertexList.push_back(v);
+
 	v.position = glm::vec3(0.5f, -0.5f, 0.0f);
+	v.colour = glm::vec3(1.0f, 0.0f, 0.0f);
 	vertexList.push_back(v);
 	//
 	std::cout << "Created Triangle 1" << std::endl;
-	Model* model = new Model();
+	Model* model = new Model(ShaderHandler::GetInstance()->GetShader("colourShader"));
 	model->AddMesh(new Mesh(vertexList));
-	shape = new GameObject(model);
 
 	// Triangle 2
 	vertexList.clear();
 	vertexList.reserve(3);
 	v.position = glm::vec3(0.5f, -0.5f, 0.0f);
+	v.colour = glm::vec3(1.0f, 0.0f, 0.0f);
 	vertexList.push_back(v);
+
 	v.position = glm::vec3(-0.5f, 0.5f, 0.0f);
+	v.colour = glm::vec3(0.0f, 1.0f, 0.0f);
 	vertexList.push_back(v);
+
 	v.position = glm::vec3(-0.5f, -0.5f, 0.0f);
+	v.colour = glm::vec3(1.0f, 0.0f, 0.0f);
 	vertexList.push_back(v);
 	//
 	std::cout << "Created Triangle 2" << std::endl;
-	Model* model2 = new Model();
-	model2->AddMesh(new Mesh(vertexList));
-	shape2 = new GameObject(model2);
+	model->AddMesh(new Mesh(vertexList));
+	shape = new GameObject(model);
+
 
 	std::cout << "Game Scene" << std::endl;
 	return true;
@@ -61,5 +68,4 @@ void GameScene::Update(const float deltaTime_)
 void GameScene::Render()
 {
 	shape->Render();
-	shape2->Render();
 }

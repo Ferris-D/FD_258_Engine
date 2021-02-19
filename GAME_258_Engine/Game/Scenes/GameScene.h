@@ -14,7 +14,6 @@ public:
 	void Render() override;
 private:
 	GameObject* shape;
-	GameObject* shape2;
 };
 
 #endif
