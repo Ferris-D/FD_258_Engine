@@ -37,8 +37,10 @@ bool CoreEngine::OnCreate(std::string name_, int width_, int height_)
 			return isRunning = false;
 		}
 	}
+
 	Debug::Info("Everything worked", "CoreEngine.cpp", __LINE__);
-	timer.Start();
+	timer = new Timer();
+	timer->Start();
 	return isRunning = true;
 }
 
@@ -46,10 +48,11 @@ void CoreEngine::Run()
 {
 	while (isRunning)
 	{
-		timer.UpdateFrameTicks();
+
+		timer->UpdateFrameTicks();
 		Update(0.016f);
 		Render();
-		SDL_Delay(timer.GetSleepTime(fps));
+		SDL_Delay(timer->GetSleepTime(fps));
 	}
 	if (!isRunning)
 	{
@@ -72,6 +75,21 @@ int CoreEngine::GetCurrentScene() const
 	return currentSceneNum;
 }
 
+float CoreEngine::GetScreenWidth() const
+{
+	return static_cast<float>(window->GetWidth());
+}
+
+float CoreEngine::GetScreenHeight() const
+{
+	return static_cast<float>(window->GetHeight());
+}
+
+Camera* CoreEngine::GetCamera() const
+{
+	return camera;
+}
+
 void CoreEngine::SetGameInterface(GameInterface* gameInterface_)
 {
 	gameInterface = gameInterface_;
@@ -80,6 +98,11 @@ void CoreEngine::SetGameInterface(GameInterface* gameInterface_)
 void CoreEngine::SetCurrentScene(int sceneNum_)
 {
 	currentSceneNum = sceneNum_;
+}
+
+void CoreEngine::SetCamera(Camera* camera_)
+{
+	camera = camera_;
 }
 
 // Physics
@@ -110,8 +133,11 @@ void CoreEngine::OnDestroy()
 	delete window;
 	window = nullptr;
 
-	//delete timer;
-	//timer = nullptr;
+	delete camera;
+	camera = nullptr;
+
+	delete timer;
+	timer = nullptr;
 
 	delete gameInterface;
 	gameInterface = nullptr;
