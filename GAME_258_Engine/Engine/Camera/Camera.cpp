@@ -9,7 +9,7 @@ nearPlane(0.0f), farPlane(0.0f), yaw(0.0f), pitch(0.0f), perspective(glm::mat4()
     forward = glm::vec3(0.0f, 0.0f, -1.0f);
     up = glm::vec3(0.0f, 1.0f, 0.0f);
     worldUp = up;
-    nearPlane = 2.0f;
+    nearPlane = 1.0f;
     farPlane = 50.0f;
     yaw = -90.0f;
     pitch = 0.0f;
@@ -24,7 +24,18 @@ nearPlane(0.0f), farPlane(0.0f), yaw(0.0f), pitch(0.0f), perspective(glm::mat4()
     UpdateCameraVectors();
 }
 
-Camera::~Camera(){}
+Camera::~Camera()
+{
+    if (Lights.size() > 0)
+    {
+        for (auto L : Lights)
+        {
+            delete L;
+            L = nullptr;
+        }
+        Lights.clear();
+    }
+}
 
 void Camera::SetPosition(glm::vec3 position_)
 {
@@ -37,6 +48,16 @@ void Camera::SetRotation(float yaw_, float pitch_)
     yaw = yaw_;
     pitch = pitch_;
     UpdateCameraVectors();
+}
+
+void Camera::AddLightSource(LightSource* light_)
+{
+    Lights.push_back(light_);
+}
+
+std::vector<LightSource*> Camera::GetLights()
+{
+    return Lights;
 }
 
 glm::mat4 Camera::GetView() const
