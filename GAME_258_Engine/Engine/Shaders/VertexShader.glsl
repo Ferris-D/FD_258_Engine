@@ -18,9 +18,9 @@ void main()
 {
 	gl_Position = projection * view * model * vec4(position, 1.0f);
 	Colour = colour;
-	TexCoords = texCoords;
+	TexCoords = vec2(texCoords.x, 1.0 - texCoords.y);
 	/// Inverse and transpose model then multiply by normal which is now a vec4 then cast to vec3
-	Normal = vec3(transpose(inverse(model)) * vec4(normal, 0.0f));
+	Normal = vec3(transpose(inverse(model)) * vec4(normal, 1.0f));
 	/// Multiply model by position which is now a vec4 then cast to vec3
-	FragPosition = vec3(model * vec4(position, 0.0f));
+	FragPosition = vec3(model * vec4(position, 1.0f));
 }
