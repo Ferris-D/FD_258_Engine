@@ -2,7 +2,9 @@
 #define COREENGINE_H
 
 #include "../Rendering/3D/GameObject.h"
+#include "../Rendering/SceneGraph.h"
 #include "../Graphics/ShaderHandler.h"
+#include "../Graphics/MaterialHandler.h"
 #include "../Graphics/TextureHandler.h"
 #include "../Camera/Camera.h"
 

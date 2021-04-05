@@ -1,3 +1,2 @@
 [INFO]: Everything worked in: CoreEngine.cpp on line: 42
-[INFO]: Creating GameScene in: GameScene.cpp on line: 17
-[INFO]: Surface for texture initialShadingGroup failed to be created in: TextureHandler.cpp on line: 51
+[INFO]: Creating GameScene in: GameScene.cpp on line: 9

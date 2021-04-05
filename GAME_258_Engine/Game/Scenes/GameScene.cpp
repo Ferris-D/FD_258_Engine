@@ -1,16 +1,8 @@
 #include "GameScene.h"
 
-GameScene::GameScene() :shape(nullptr)
-{
-}
+GameScene::GameScene(){}
 
-GameScene::~GameScene()
-{
-	model = nullptr;
-
-	delete shape;
-	shape = nullptr;
-}
+GameScene::~GameScene(){}
 
 bool GameScene::OnCreate()
 {
@@ -20,19 +12,27 @@ bool GameScene::OnCreate()
 	CoreEngine::GetInstance()->GetCamera()->SetPosition(glm::vec3(0.0f, 0.0f, 4.0f));
 	CoreEngine::GetInstance()->GetCamera()->AddLightSource(new LightSource(glm::vec3(-1.0f, 0.0f, 2.0f), 0.5f, 0.5f, 0.5f, glm::vec3(1.0f, 1.0f, 1.0f)));
 
-	model = new Model("Resources/Models/Skull.obj","Resources/Materials/Apple.mtl",ShaderHandler::GetInstance()->GetShader("basicShader"));
-	shape = new GameObject(model);
+	Model* diceM = new Model("Resources/Models/Dice.obj", "Resources/Materials/Dice.mtl", ShaderHandler::GetInstance()->GetShader("basicShader"));
+	Model* appleM = new Model("Resources/Models/Apple.obj", "Resources/Materials/Apple.mtl", ShaderHandler::GetInstance()->GetShader("basicShader"));
 
+	SceneGraph::GetInstance()->AddModel(diceM);
+	SceneGraph::GetInstance()->AddModel(appleM);
+
+	SceneGraph::GetInstance()->AddGameObject(new GameObject(diceM, glm::vec3(-2.0f, 0.0f, -2.0f)));
+	SceneGraph::GetInstance()->AddGameObject(new GameObject(appleM, glm::vec3(1.5f, 0.0f, 0.0f)), "Apple");
+
+	diceM = nullptr;
+	appleM = nullptr;
 	std::cout << "Game Scene" << std::endl;
 	return true;
 }
 
 void GameScene::Update(const float deltaTime_)
 {
-	shape->Update(deltaTime_);
+	SceneGraph::GetInstance()->Update(deltaTime_);
 }
 
 void GameScene::Render()
 {
-	shape->Render(CoreEngine::GetInstance()->GetCamera());
+	SceneGraph::GetInstance()->Render(CoreEngine::GetInstance()->GetCamera());
 }
