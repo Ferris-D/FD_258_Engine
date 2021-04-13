@@ -2,7 +2,9 @@
 
 std::unique_ptr<CoreEngine> CoreEngine::engineInstance = nullptr;
 
-CoreEngine::CoreEngine() :window(nullptr), isRunning(false), fps(60), gameInterface(nullptr), currentSceneNum(0) {}
+CoreEngine::CoreEngine() :window(nullptr), isRunning(false), fps(60), gameInterface(nullptr), currentSceneNum(0) 
+{
+}
 
 CoreEngine::~CoreEngine() {}
 
@@ -25,6 +27,10 @@ bool CoreEngine::OnCreate(std::string name_, int width_, int height_)
 		OnDestroy();
 		return isRunning = false;
  	}
+
+	SDL_WarpMouseInWindow(window->GetWindow(), window->GetWidth() / 2, window->GetHeight() / 2);
+
+	MouseEventListener::RegisterEngineObject(this);
 
 	ShaderHandler::GetInstance()->CreateProgram("colourShader", "Engine/Shaders/ColourVertexShader.glsl", "Engine/Shaders/ColourFragmentShader.glsl");
 	ShaderHandler::GetInstance()->CreateProgram("basicShader", "Engine/Shaders/VertexShader.glsl", "Engine/Shaders/FragmentShader.glsl");
@@ -49,9 +55,9 @@ void CoreEngine::Run()
 {
 	while (isRunning)
 	{
-
 		timer->UpdateFrameTicks();
-		Update(0.016f);
+		EventListener::Update();
+		Update(timer->GetDeltaTime());
 		Render();
 		SDL_Delay(timer->GetSleepTime(fps));
 	}
@@ -106,6 +112,30 @@ void CoreEngine::SetCamera(Camera* camera_)
 	camera = camera_;
 }
 
+void CoreEngine::NotifyOfMousePressed(glm::ivec2 mouse_, int buttonType_)
+{
+}
+
+void CoreEngine::NotifyOfMouseReleased(glm::ivec2 mouse_, int buttonType_)
+{
+}
+
+void CoreEngine::NotifyOfMouseMove(glm::ivec2 mouse_)
+{
+	if (camera)
+	{
+		camera->ProcessMouseMovement(MouseEventListener::GetMouseOffset());
+	}
+}
+
+void CoreEngine::NotifyOfMouseScroll(int y_)
+{
+	if (camera)
+	{
+		camera->ProcessMouseZoom(y_);
+	}
+}
+
 // Physics
 void CoreEngine::Update(const float deltaTime_)
 {
@@ -133,8 +163,8 @@ void CoreEngine::OnDestroy()
 	MaterialHandler::GetInstance()->OnDestroy();
 	SceneGraph::GetInstance()->OnDestroy();
 
-	delete window;
-	window = nullptr;
+	delete gameInterface;
+	gameInterface = nullptr;
 
 	delete camera;
 	camera = nullptr;
@@ -142,8 +172,8 @@ void CoreEngine::OnDestroy()
 	delete timer;
 	timer = nullptr;
 
-	delete gameInterface;
-	gameInterface = nullptr;
+	delete window;
+	window = nullptr;
 
 	SDL_Quit();
 	exit(0);

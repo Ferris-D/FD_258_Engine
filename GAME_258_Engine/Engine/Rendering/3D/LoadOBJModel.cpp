@@ -36,6 +36,11 @@ std::vector<SubMesh> LoadOBJModel::GetSubMeshes()
     return subMeshes;
 }
 
+BoundingBox LoadOBJModel::GetBoundingBox() const
+{
+    return boundingBox;
+}
+
 void LoadOBJModel::PostProcessing()
 {
     for (unsigned int i = 0; i < indices.size(); i++)
@@ -80,6 +85,15 @@ void LoadOBJModel::LoadModel(const std::string& filePath_)
             float x, y, z;
             v >> x >> y >> z;
             vertices.push_back(glm::vec3(x, y, z));
+            
+            // Bounding box here
+            boundingBox.minVert.x = (x < boundingBox.minVert.x) ? x : boundingBox.minVert.x;
+            boundingBox.minVert.y = (y < boundingBox.minVert.y) ? y : boundingBox.minVert.y;
+            boundingBox.minVert.z = (z < boundingBox.minVert.z) ? z : boundingBox.minVert.z;
+
+            boundingBox.maxVert.x = (x > boundingBox.maxVert.x) ? x : boundingBox.maxVert.x;
+            boundingBox.maxVert.y = (y > boundingBox.maxVert.y) ? y : boundingBox.maxVert.y;
+            boundingBox.maxVert.z = (z > boundingBox.maxVert.z) ? z : boundingBox.maxVert.z;
         }
         else if (line.substr(0, 7) == "usemtl ")
         {

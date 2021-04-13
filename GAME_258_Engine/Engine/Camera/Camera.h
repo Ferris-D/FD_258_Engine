@@ -16,12 +16,15 @@ public:
 	void SetRotation(float yaw_, float pitch_);
 
 	void AddLightSource(LightSource* light_);
-	std::vector<LightSource*> GetLights();
+	std::vector<LightSource*> GetLights() const;
 
 	glm::mat4 GetView() const;
 	glm::mat4 GetPerspective() const;
 	glm::mat4 GetOrthographic() const;
 	glm::vec3 GetPosition()const;
+
+	void ProcessMouseMovement(glm::vec2 offset_);
+	void ProcessMouseZoom(int y_);
 
 private:
 	void UpdateCameraVectors();
@@ -32,7 +35,7 @@ private:
 	float nearPlane, farPlane;
 	glm::vec3 forward, up, right, worldUp;
 
-	std::vector<LightSource*> Lights;
+	std::vector<LightSource*> lights;
 
 };
 

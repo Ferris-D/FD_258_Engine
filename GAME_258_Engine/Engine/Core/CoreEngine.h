@@ -7,6 +7,7 @@
 #include "../Graphics/MaterialHandler.h"
 #include "../Graphics/TextureHandler.h"
 #include "../Camera/Camera.h"
+#include "../Events/EventListener.h"
 
 #include "Window.h"
 #include "Timer.h"
@@ -42,6 +43,11 @@ public:
 	void SetGameInterface(GameInterface* gameInterface_);
 	void SetCurrentScene(int sceneNum_);
 	void SetCamera(Camera* camera_);
+
+	void NotifyOfMousePressed(glm::ivec2 mouse_, int buttonType_);
+	void NotifyOfMouseReleased(glm::ivec2 mouse_, int buttonType_);
+	void NotifyOfMouseMove(glm::ivec2 mouse_);
+	void NotifyOfMouseScroll(int y_);
 
 private:
 	CoreEngine();

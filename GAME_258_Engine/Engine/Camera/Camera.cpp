@@ -26,14 +26,14 @@ nearPlane(0.0f), farPlane(0.0f), yaw(0.0f), pitch(0.0f), perspective(glm::mat4()
 
 Camera::~Camera()
 {
-    if (Lights.size() > 0)
+    if (lights.size() > 0)
     {
-        for (auto L : Lights)
+        for (auto L : lights)
         {
             delete L;
             L = nullptr;
         }
-        Lights.clear();
+        lights.clear();
     }
 }
 
@@ -52,12 +52,12 @@ void Camera::SetRotation(float yaw_, float pitch_)
 
 void Camera::AddLightSource(LightSource* light_)
 {
-    Lights.push_back(light_);
+    lights.push_back(light_);
 }
 
-std::vector<LightSource*> Camera::GetLights()
+std::vector<LightSource*> Camera::GetLights() const
 {
-    return Lights;
+    return lights;
 }
 
 glm::mat4 Camera::GetView() const
@@ -78,6 +78,30 @@ glm::mat4 Camera::GetOrthographic() const
 glm::vec3 Camera::GetPosition() const
 {
     return position;
+}
+
+void Camera::ProcessMouseMovement(glm::vec2 offset_)
+{
+    offset_ *= 0.05f;
+
+    yaw += offset_.x;
+    pitch -= offset_.y;
+
+    if (pitch > 89.0f) { pitch = -89.0f; }
+    if (pitch < -89.0f) { pitch = -89.0f; }
+    if (yaw < 0.0f) { yaw += 360.0f; }
+    if (yaw > 360.0f) { yaw -= 360.0f; }
+
+    UpdateCameraVectors();
+}
+
+void Camera::ProcessMouseZoom(int y_)
+{
+    if (y_ < 0 || y_>0)
+    {
+        position += static_cast<float>(y_) * (forward * 2.0f);
+    }
+    UpdateCameraVectors();
 }
 
 void Camera::UpdateCameraVectors()
