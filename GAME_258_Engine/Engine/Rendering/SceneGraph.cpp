@@ -56,7 +56,6 @@ void SceneGraph::AddModel(Model* model_)
 	{
 		sceneModels.insert(std::pair<GLuint, std::vector<Model*>>(shader, std::vector<Model*>()));
 		sceneModels[shader].reserve(10);
-		sceneModels[shader].push_back(model_);
 	}
 	sceneModels[shader].push_back(model_);
 }
@@ -81,6 +80,7 @@ void SceneGraph::AddGameObject(GameObject* go_, std::string tag_)
 		go_->SetTag(newTag);
 		sceneGameObjects[newTag] = go_;
 	}
+	CollisionHandler::GetInstance()->AddObject(go_);
 }
 
 GameObject* SceneGraph::GetGameObject(std::string tag_)

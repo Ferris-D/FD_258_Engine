@@ -76,6 +76,8 @@ void LoadOBJModel::LoadModel(const std::string& filePath_)
     }
 
     std::string line;
+    boundingBox.minVert = glm::vec3(1000.0f);
+    boundingBox.maxVert = glm::vec3(-1000.0f);
 
     while (std::getline(in, line))
     {

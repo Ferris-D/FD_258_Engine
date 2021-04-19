@@ -22,6 +22,9 @@ public:
 	glm::mat4 GetPerspective() const;
 	glm::mat4 GetOrthographic() const;
 	glm::vec3 GetPosition()const;
+	//Frustum GetPerspectiveFrustum() const;
+	float GetNearPlane() const;
+	float GetFarPlane() const;
 
 	void ProcessMouseMovement(glm::vec2 offset_);
 	void ProcessMouseZoom(int y_);
