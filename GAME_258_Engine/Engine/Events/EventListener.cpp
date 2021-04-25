@@ -22,6 +22,18 @@ void EventListener::Update()
 		case SDL_MOUSEWHEEL:
 			MouseEventListener::Update(sdlEvent);
 			break;
+		case SDL_KEYDOWN:
+			switch (sdlEvent.key.keysym.sym)
+			{
+			case SDLK_RIGHT:
+				CoreEngine::GetInstance()->GetCamera()->MoveCameraRight(1.0f);
+				break;
+			case SDLK_LEFT:
+				CoreEngine::GetInstance()->GetCamera()->MoveCameraLeft(1.0f);
+				break;
+			}
+		case SDL_KEYUP:
+			
 		default:
 			break;
 		}

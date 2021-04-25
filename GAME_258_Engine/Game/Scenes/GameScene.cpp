@@ -20,7 +20,7 @@ bool GameScene::OnCreate()
 	SceneGraph::GetInstance()->AddModel(diceM);
 	SceneGraph::GetInstance()->AddModel(appleM);
 
-	SceneGraph::GetInstance()->AddGameObject(new GameObject(diceM, glm::vec3(-2.0f, 0.0f, -2.0f)));
+	SceneGraph::GetInstance()->AddGameObject(new GameObject(diceM, glm::vec3(-2.0f, 0.0f, -2.0f)), "Box");
 	SceneGraph::GetInstance()->AddGameObject(new GameObject(appleM, glm::vec3(1.5f, 0.0f, 0.0f)), "Apple");
 
 	diceM = nullptr;
@@ -36,5 +36,8 @@ void GameScene::Update(const float deltaTime_)
 
 void GameScene::Render()
 {
+	//
+	CoreEngine::GetInstance()->GetCamera()->ObjectInViewCheck(SceneGraph::GetInstance()->GetGameObject("Box"));
+	CoreEngine::GetInstance()->GetCamera()->ObjectInViewCheck(SceneGraph::GetInstance()->GetGameObject("Apple"));
 	SceneGraph::GetInstance()->Render(CoreEngine::GetInstance()->GetCamera());
 }

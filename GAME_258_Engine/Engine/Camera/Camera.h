@@ -2,10 +2,10 @@
 #define CAMERA_H
 
 #include "../FX/LightSource.h"
-#include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <vector>
-
+#include "../Math/Frustum.h"
+class GameObject;
 class Camera
 {
 public:
@@ -22,12 +22,16 @@ public:
 	glm::mat4 GetPerspective() const;
 	glm::mat4 GetOrthographic() const;
 	glm::vec3 GetPosition()const;
-	//Frustum GetPerspectiveFrustum() const;
 	float GetNearPlane() const;
 	float GetFarPlane() const;
 
+	void ObjectInViewCheck(GameObject* go_);
+
 	void ProcessMouseMovement(glm::vec2 offset_);
 	void ProcessMouseZoom(int y_);
+
+	void MoveCameraRight(float amount_);
+	void MoveCameraLeft(float amount_);
 
 private:
 	void UpdateCameraVectors();
@@ -38,6 +42,7 @@ private:
 	float nearPlane, farPlane;
 	glm::vec3 forward, up, right, worldUp;
 
+	Frustum viewFrustum;
 	std::vector<LightSource*> lights;
 
 };

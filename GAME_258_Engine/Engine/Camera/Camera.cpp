@@ -88,6 +88,19 @@ float Camera::GetNearPlane() const
 float Camera::GetFarPlane() const
 {
     return farPlane;
+    
+}
+
+void Camera::ObjectInViewCheck(GameObject* go_)
+{
+    if (viewFrustum.BoxInFustrum(go_->GetPosition()))
+    {
+        std::cout << go_->GetTag() << " is in view" << std::endl;
+    }
+    else
+    {
+        std::cout << go_->GetTag() << " is not in view" << std::endl;
+    }
 }
 
 void Camera::ProcessMouseMovement(glm::vec2 offset_)
@@ -114,6 +127,18 @@ void Camera::ProcessMouseZoom(int y_)
     UpdateCameraVectors();
 }
 
+void Camera::MoveCameraRight(float amount_)
+{
+    position.x += amount_;
+    UpdateCameraVectors();
+}
+
+void Camera::MoveCameraLeft(float amount_)
+{
+    position.x -= amount_;
+    UpdateCameraVectors();
+}
+
 void Camera::UpdateCameraVectors()
 {
     forward.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
@@ -127,4 +152,7 @@ void Camera::UpdateCameraVectors()
     up = glm::normalize(glm::cross(right, forward));
 
     view = glm::lookAt(position, position + forward, up);
+
+    // Calculate the frustum every time the camera changes
+    viewFrustum.CalculateFrustum(perspective, view);
 }
