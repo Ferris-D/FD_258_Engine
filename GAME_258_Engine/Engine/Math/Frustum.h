@@ -112,7 +112,7 @@ public:
 		frustum[NEAR].w = clipping[15] + clipping[14];
 
 		// Normalize
-		glm::normalize(frustum[NEAR]);
+		frustum[NEAR] = glm::normalize(frustum[NEAR]);
 
 		//std::cout << "Frustum calculated" << std::endl;
 	}

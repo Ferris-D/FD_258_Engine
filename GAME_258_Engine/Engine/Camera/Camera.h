@@ -30,8 +30,13 @@ public:
 	void ProcessMouseMovement(glm::vec2 offset_);
 	void ProcessMouseZoom(int y_);
 
+	void MoveCameraForward(int y_);
+
+	// Moves the camera not based off of view but actual coordinates it is at
 	void MoveCameraRight(float amount_);
 	void MoveCameraLeft(float amount_);
+	void MoveCameraUp(float amount_);
+	void MoveCameraDown(float amount_);
 
 private:
 	void UpdateCameraVectors();

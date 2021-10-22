@@ -112,6 +112,11 @@ void CoreEngine::SetCamera(Camera* camera_)
 	camera = camera_;
 }
 
+void CoreEngine::SetMouseLock(SDL_bool value_)
+{
+	SDL_SetWindowGrab(window->GetWindow(), value_);
+}
+
 void CoreEngine::NotifyOfMousePressed(glm::ivec2 mouse_, int buttonType_)
 {
 }

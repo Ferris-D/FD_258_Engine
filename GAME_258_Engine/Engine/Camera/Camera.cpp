@@ -95,7 +95,7 @@ void Camera::ObjectInViewCheck(GameObject* go_)
 {
     if (viewFrustum.BoxInFustrum(go_->GetPosition()))
     {
-        std::cout << go_->GetTag() << " is in view" << std::endl;
+        //std::cout << go_->GetTag() << " is in view" << std::endl;
     }
     else
     {
@@ -127,6 +127,15 @@ void Camera::ProcessMouseZoom(int y_)
     UpdateCameraVectors();
 }
 
+void Camera::MoveCameraForward(int y_)
+{
+    if (y_ < 0 || y_>0)
+    {
+        position += static_cast<float>(y_) * (forward * 2.0f);
+    }
+    UpdateCameraVectors();
+}
+
 void Camera::MoveCameraRight(float amount_)
 {
     position.x += amount_;
@@ -136,6 +145,18 @@ void Camera::MoveCameraRight(float amount_)
 void Camera::MoveCameraLeft(float amount_)
 {
     position.x -= amount_;
+    UpdateCameraVectors();
+}
+
+void Camera::MoveCameraUp(float amount_)
+{
+    position.y += amount_;
+    UpdateCameraVectors();
+}
+
+void Camera::MoveCameraDown(float amount_)
+{
+    position.y -= amount_;
     UpdateCameraVectors();
 }
 

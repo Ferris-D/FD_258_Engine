@@ -29,6 +29,7 @@ public:
 	static glm::ivec2 GetMouseOffset();
 
 private:
+	static bool mouseToggle;
 	static CoreEngine* engineInstance;
 	static glm::ivec2 mouse, prevMouse;
 	static bool firstUpdate;

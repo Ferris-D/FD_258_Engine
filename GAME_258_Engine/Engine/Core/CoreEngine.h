@@ -44,6 +44,9 @@ public:
 	void SetCurrentScene(int sceneNum_);
 	void SetCamera(Camera* camera_);
 
+	// Set mouse wrap
+	void SetMouseLock(SDL_bool value_);
+
 	void NotifyOfMousePressed(glm::ivec2 mouse_, int buttonType_);
 	void NotifyOfMouseReleased(glm::ivec2 mouse_, int buttonType_);
 	void NotifyOfMouseMove(glm::ivec2 mouse_);

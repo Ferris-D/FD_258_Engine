@@ -5,6 +5,7 @@ CoreEngine* MouseEventListener::engineInstance = nullptr;
 glm::ivec2 MouseEventListener::mouse = glm::ivec2();
 glm::ivec2 MouseEventListener::prevMouse = glm::ivec2();
 bool MouseEventListener::firstUpdate = true;
+bool mouseToggle = true;
 
 MouseEventListener::~MouseEventListener()
 {
@@ -17,26 +18,26 @@ void MouseEventListener::RegisterEngineObject(CoreEngine* engine_)
 }
 
 void MouseEventListener::Update(SDL_Event e_)
-{
-	if (e_.type == SDL_MOUSEBUTTONDOWN)
-	{
-		UpdateMousePosition();
-		NotifyOfMousePressed(e_.button.button);
-	}
-	else if (e_.type == SDL_MOUSEBUTTONUP)
-	{
-		UpdateMousePosition();
-		NotifyOfMouseReleased(e_.button.button);
-	}
-	else if (e_.type == SDL_MOUSEMOTION)
-	{
-		UpdateMousePosition();
-		NotifyOfMouseMove();
-	}
-	else if (e_.type == SDL_MOUSEWHEEL)
-	{
-		UpdateMousePosition();
-		NotifyOfMouseScroll(e_.wheel.y);
+{												//
+	if (e_.type == SDL_MOUSEBUTTONDOWN)			//
+	{											//
+		UpdateMousePosition();					//
+		NotifyOfMousePressed(e_.button.button);	//
+	}											//
+	else if (e_.type == SDL_MOUSEBUTTONUP)		//
+	{											//
+		UpdateMousePosition();					//
+		NotifyOfMouseReleased(e_.button.button);//
+	}											//
+	else if (e_.type == SDL_MOUSEMOTION)		//
+	{											//
+		UpdateMousePosition();					//
+		NotifyOfMouseMove();					//
+	}											//
+	else if (e_.type == SDL_MOUSEWHEEL)			//
+	{											//
+		UpdateMousePosition();					//
+		NotifyOfMouseScroll(e_.wheel.y);		//
 	}
 }
 
