@@ -1,4 +1,5 @@
 #include "Window.h"
+#include "SDL_mixer.h"
 
 Window::Window()
 {

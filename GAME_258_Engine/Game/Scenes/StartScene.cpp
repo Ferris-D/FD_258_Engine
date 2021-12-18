@@ -12,7 +12,7 @@ bool StartScene::OnCreate()
 {
 	std::cout << "Start Scene" << std::endl;
 	// Switch to game scene
-	CoreEngine::GetInstance()->SetCurrentScene(1);
+	//CoreEngine::GetInstance()->SetCurrentScene(1);
 	return true;
 }
 

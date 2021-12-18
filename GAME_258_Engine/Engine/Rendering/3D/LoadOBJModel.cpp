@@ -87,7 +87,7 @@ void LoadOBJModel::LoadModel(const std::string& filePath_)
             float x, y, z;
             v >> x >> y >> z;
             vertices.push_back(glm::vec3(x, y, z));
-            
+
             // Bounding box here
             boundingBox.minVert.x = (x < boundingBox.minVert.x) ? x : boundingBox.minVert.x;
             boundingBox.minVert.y = (y < boundingBox.minVert.y) ? y : boundingBox.minVert.y;

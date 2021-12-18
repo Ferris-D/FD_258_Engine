@@ -1,9 +1,8 @@
 #include "GameObject.h"
 
-GameObject::GameObject(Model* model_, float avelocity_, glm::vec3 velocity_, glm::vec3 position_) : model(nullptr), avelocity(0.0f), velocity(glm::vec3()), position(glm::vec3()), angle(0.0f), rotation(glm::vec3(0.0f, 1.0f, 0.0f)), scale(glm::vec3(1.0f)), modelInstance(0), hit(false)
+GameObject::GameObject(Model* model_, glm::vec3 velocity_, glm::vec3 position_) : model(nullptr), avelocity(0.0f,0.0f,0.0f), velocity(glm::vec3()), position(glm::vec3()), angle(0.0f), rotation(1.0f,glm::vec3(0.0f,0.0f,0.0f)), scale(glm::vec3(1.0f)), modelInstance(0), hit(false)
 {
 	model = model_;
-	avelocity = avelocity_;
 	velocity = velocity_;
 	position = position_;
 	if (model)
@@ -24,7 +23,10 @@ GameObject::~GameObject()
 void GameObject::Update(const float deltaTime_)
 {
 	SetPosition(position + velocity*deltaTime_);
-	SetAngle(angle + avelocity);
+	rotation = rotation.ApplyVelocity(rotation, avelocity, deltaTime_);
+	//std::cout << rotation.v.x << " " << rotation.v.y << " " << rotation.v.z << " " << rotation.v.w << std::endl;
+	SetRotation(rotation);
+	//SetAngle(angle + avelocity);
 }
 
 void GameObject::Render(Camera* camera_)
@@ -45,7 +47,7 @@ float GameObject::GetAngle() const
 	return angle;
 }
 
-glm::vec3 GameObject::GetRotation() const
+Quaternion GameObject::GetRotation() const
 {
 	return rotation;
 }
@@ -90,7 +92,7 @@ void GameObject::SetAngle(float angle_)
 	}
 }
 
-void GameObject::SetRotation(glm::vec3 rotation_)
+void GameObject::SetRotation(Quaternion rotation_)
 {
 	rotation = rotation_;
 	if (model)
@@ -105,7 +107,7 @@ void GameObject::SetVelocity(glm::vec3 velocity_)
 	velocity = velocity_;
 }
 
-void GameObject::SetAVelocity(float avelocity_)
+void GameObject::SetAVelocity(glm::vec3 avelocity_)
 {
 	avelocity = avelocity_;
 }

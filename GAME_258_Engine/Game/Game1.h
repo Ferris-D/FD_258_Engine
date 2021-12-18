@@ -4,6 +4,7 @@
 #include "../Engine/Core/CoreEngine.h"
 #include "Scenes/StartScene.h"
 #include "Scenes/GameScene.h"
+#include "Scenes/Scene1.h"
 
 class Game1 : public GameInterface
 {

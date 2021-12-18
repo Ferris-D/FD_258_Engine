@@ -1,4 +1,5 @@
 #include "CoreEngine.h"
+#include "SDL_mixer.h"
 
 std::unique_ptr<CoreEngine> CoreEngine::engineInstance = nullptr;
 
@@ -50,6 +51,8 @@ bool CoreEngine::OnCreate(std::string name_, int width_, int height_)
 	timer->Start();
 	return isRunning = true;
 }
+
+
 
 void CoreEngine::Run()
 {
@@ -115,6 +118,7 @@ void CoreEngine::SetCamera(Camera* camera_)
 void CoreEngine::SetMouseLock(SDL_bool value_)
 {
 	SDL_SetWindowGrab(window->GetWindow(), value_);
+	SDL_SetRelativeMouseMode(value_);
 }
 
 void CoreEngine::NotifyOfMousePressed(glm::ivec2 mouse_, int buttonType_)
@@ -182,6 +186,7 @@ void CoreEngine::OnDestroy()
 	delete window;
 	window = nullptr;
 
+	Mix_Quit();
 	SDL_Quit();
 	exit(0);
 }

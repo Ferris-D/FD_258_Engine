@@ -2,6 +2,7 @@
 #define MODEL_H
 
 #include "LoadOBJModel.h"
+#include "../../Math/Quaternion.h"
 //#include <glm/gtc/matrix_transform.inl>
 #include <string>
 
@@ -14,14 +15,15 @@ public:
 
 	void Render(Camera* camera_);
 	void AddMesh(Mesh* mesh_);
-	unsigned int CreateInstance(glm::vec3 position_, float angle_, glm::vec3 rotation_, glm::vec3 scale_);
-	void UpdateInstance(unsigned int index_, glm::vec3 position_, float angle_, glm::vec3 rotation_, glm::vec3 scale_);
+	unsigned int CreateInstance(glm::vec3 position_, float angle_, Quaternion rotation_, glm::vec3 scale_);
+	void UpdateInstance(unsigned int index_, glm::vec3 position_, float angle_, Quaternion rotation_, glm::vec3 scale_);
 	glm::mat4 GetTransform(unsigned int index_) const;
 	GLuint GetShaderProgram() const;
 	BoundingBox GetBoundingBox() const;
 	
 private:
-	glm::mat4 CreateTransform(glm::vec3 position_, float angle_, glm::vec3 rotation_, glm::vec3 scale_) const;
+
+	glm::mat4 CreateTransform(glm::vec3 position_, float angle_, Quaternion rotation_, glm::vec3 scale_) const;
 	void LoadModel();
 
 	std::vector<Mesh*> meshes;

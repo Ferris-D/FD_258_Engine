@@ -89,12 +89,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)Additional\SDL2_mixer-2.0.4\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\GameDev\SDL\lib;C:\GameDev\OpenGL\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2_image.lib;SDL2main.lib;SDL2test.lib;glew32.lib;glew32s.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\GameDev\SDL\lib;C:\GameDev\OpenGL\lib;$(SolutionDir)Additional\SDL2_mixer-2.0.4\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2_image.lib;SDL2main.lib;SDL2test.lib;glew32.lib;glew32s.lib;opengl32.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -166,6 +167,8 @@
     <ClCompile Include="Engine\FX\MaterialLoader.cpp" />
     <ClCompile Include="Engine\Events\MouseEventListener.cpp" />
     <ClCompile Include="Engine\Core\OctSpatialPartition.cpp" />
+    <ClCompile Include="Engine\Math\Quaternion.cpp" />
+    <ClCompile Include="Game\Scenes\Scene1.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Math\CollisionHandler.h" />
@@ -196,6 +199,10 @@
     <ClInclude Include="Engine\Events\MouseEventListener.h" />
     <ClInclude Include="Engine\Math\Ray.h" />
     <ClInclude Include="Engine\Core\OctSpatialPartition.h" />
+    <ClInclude Include="Engine\Math\Quaternion.h" />
+    <ClInclude Include="Game\Scenes\Scene1.h" />
+    <ClInclude Include="Simplex.h" />
+    <ClInclude Include="Engine\FX\Sound.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Shaders\ColourFragmentShader.glsl" />

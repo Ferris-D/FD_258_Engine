@@ -1,4 +1,6 @@
 #include "Model.h"
+#include <glm/gtx/quaternion.hpp>
+#include <glm/gtc/quaternion.hpp>
 
 Model::Model(const std::string& objPath_, const std::string& matPath_, GLuint shaderProgram_) : meshes(std::vector<Mesh*>()), shaderProgram(0), modelInstances(std::vector<glm::mat4>())
 {
@@ -42,13 +44,13 @@ void Model::AddMesh(Mesh* mesh_)
 	meshes.push_back(mesh_);
 }
 
-unsigned int Model::CreateInstance(glm::vec3 position_, float angle_, glm::vec3 rotation_, glm::vec3 scale_)
+unsigned int Model::CreateInstance(glm::vec3 position_, float angle_, Quaternion rotation_, glm::vec3 scale_)
 {
 	modelInstances.push_back(CreateTransform(position_, angle_, rotation_, scale_));
 	return modelInstances.size() - 1;
 }
 
-void Model::UpdateInstance(unsigned int index_, glm::vec3 position_, float angle_, glm::vec3 rotation_, glm::vec3 scale_)
+void Model::UpdateInstance(unsigned int index_, glm::vec3 position_, float angle_, Quaternion rotation_, glm::vec3 scale_)
 {
 	modelInstances[index_] = CreateTransform(position_, angle_, rotation_, scale_);
 }
@@ -68,12 +70,19 @@ BoundingBox Model::GetBoundingBox() const
 	return boundingBox;
 }
 
-glm::mat4 Model::CreateTransform(glm::vec3 position_, float angle_, glm::vec3 rotation_, glm::vec3 scale_) const
+glm::mat4 Model::CreateTransform(glm::vec3 position_, float angle_, Quaternion rotation_, glm::vec3 scale_) const
 {
 	glm::mat4 model;
 	model = glm::translate(model, position_);
-	model = glm::rotate(model, angle_, rotation_);
+	glm::quat qq(rotation_.v.w, rotation_.v.x, rotation_.v.y, rotation_.v.z);
+	//model *= glm::toMat4(glm::quat(rotation_.v.w, rotation_.v.x, rotation_.v.y, rotation_.v.z));
+	float angle = glm::angle(qq);
+	glm::vec3 axis = glm::axis(qq);
+	model = glm::rotate(model, angle, axis);
 	model = glm::scale(model, scale_);
+	//model = glm::rotate(model, rotation_.CQAA(rotation_).angle_, rotation_.CQAA(rotation_).rotation_);
+	//model = glm::rotate(model, rotation_.CQAA().angle_, rotation_.CQAA().rotation_);
+	//model = glm::rotate(model, angle_, (glm::quat(rotation_.v.w, rotation_.v.x, rotation_.v.y, rotation_.v.z)));
 	return model;
 }
 

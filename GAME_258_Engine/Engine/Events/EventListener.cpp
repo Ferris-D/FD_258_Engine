@@ -1,7 +1,6 @@
 #include "EventListener.h"
 #include "../Core/CoreEngine.h"
 
-
 EventListener::~EventListener()
 {
 }
@@ -40,6 +39,15 @@ void EventListener::Update()
 				break;
 			case SDLK_DOWN:
 				CoreEngine::GetInstance()->GetCamera()->MoveCameraDown(0.5f);
+				break;
+			case SDLK_q:
+				CoreEngine::GetInstance()->Exit();
+				break;
+			case SDLK_1:
+				CoreEngine::GetInstance()->SetCurrentScene(1);
+				break;
+			case SDLK_2:
+				CoreEngine::GetInstance()->SetCurrentScene(2);
 				break;
 			case SDLK_F1:
 				CoreEngine::GetInstance()->SetMouseLock(SDL_FALSE);
